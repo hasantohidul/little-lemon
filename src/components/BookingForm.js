@@ -1,31 +1,38 @@
-import { useState } from "react";
-
-const initalFormValues = {
-  date: "",
-  time: "17:00",
-  guests: 1, 
-  occasion: "As Usual"
-}
-
-export default function BookingForm() {
-  const [formData, setFormData] = useState(initalFormValues);
+import {useEffect, useState } from "react";
 
 
+export default function BookingForm({ availableTimes, dispatch }) {
+  const [formData, setFormData] = useState({
+    date: "",
+    time: availableTimes[0] || "",
+    guests: 1,
+    occasion: "As Usual",
+  });
 
   // Handler for input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === "date") {
+      dispatch({type: 'resetTimes'})
+    }
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
-
 
   // Handler for form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-      console.log("Form Data:", formData);
-      setFormData(initalFormValues);
-      alert("The Resrvation is completed successfully!");
+    console.log("Form Data:", formData);
+    dispatch({ type: "updateTime", time: formData.time });
+    alert("The Resrvation is completed successfully!");
+  
   };
+
+  useEffect(() => {
+    setFormData(prevStat => {
+      return {...prevStat, time: availableTimes[0]}
+  })
+  }, [availableTimes])
+  
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="res-date">Choose date</label>
@@ -36,6 +43,7 @@ export default function BookingForm() {
         aria-label="Select a date for your reservation"
         value={formData.date}
         onChange={handleChange}
+        required
       />
 
       <label htmlFor="res-time">Choose time</label>
@@ -44,14 +52,14 @@ export default function BookingForm() {
         name="time"
         aria-label="Select a time for your reservation"
         value={formData.time}
+        disabled={availableTimes.length === 0}
         onChange={handleChange}
       >
-        <option>17:00</option>
-        <option>18:00</option>
-        <option>19:00</option>
-        <option>20:00</option>
-        <option>21:00</option>
-        <option>22:00</option>
+        {availableTimes.length > 0 ? availableTimes.map((time) => (
+          <option key={time} value={time}>
+            {time}
+          </option>
+        )) : <option>No slot is availabe for {formData.date}</option> }
       </select>
 
       <label htmlFor="guests">Number of guests</label>
@@ -78,7 +86,7 @@ export default function BookingForm() {
         <option>Birthday</option>
         <option>Anniversary</option>
       </select>
-      <input type="submit" value="Make Your reservation" />
+      <input type="submit" value="Make Your reservation" disabled={availableTimes.length === 0} />
     </form>
   );
 }

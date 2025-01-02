@@ -1,6 +1,6 @@
-import greekSalad from "./greek salad.jpg";
-import bruschetta from "./bruschetta.jpg";
-import lemonDessert from "./lemon dessert.jpg";
+import greekSalad from "./images/greek salad.jpg";
+import bruschetta from "./images/bruschetta.jpg";
+import lemonDessert from "./images/lemon dessert.jpg";
 
 export const imageData = [
     {

@@ -1,0 +1,81 @@
+nav {
+  background-color: #edefee;
+  font-family: 'Markazi Text';
+  padding: 0.5rem;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-size: 32px;
+  padding: 1rem;
+}
+
+.nav-links a:hover {
+  color: #ee9972;
+}
+
+
+/* Burger Menu */
+.burger {
+  display: none;
+  flex-direction: column;
+  width: 24px;
+  height: 28px;
+  justify-content: center;
+  border-radius: 5px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 10px;
+  margin-top: 0.75rem;
+}
+
+.burger .line {
+  width: 24px;
+  height: 3px;
+  background-color: black;
+  margin: 2px;
+  border-radius: 2px;
+}
+
+
+/* Mobile Devices */
+@media only screen and (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+  .nav-container {
+    flex-direction: column;
+    align-items: start;
+  }
+  .burger {
+    display: flex;
+  }
+
+  .active {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: stretch;
+  }
+
+  .nav-links a {
+    cursor:default;
+  }
+}
